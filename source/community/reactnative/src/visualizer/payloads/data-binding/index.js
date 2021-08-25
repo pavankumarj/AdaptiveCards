@@ -18,5 +18,9 @@ export default payloads = [
     {
         "title": "Vertical Alignment Container",
         "json": require('./VerticalContentAlignment_Container.json')
+    },
+    {
+        "title": "Cafe",
+        "json": require('./cafe.json')
     }
 ]
