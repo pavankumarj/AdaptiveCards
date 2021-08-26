@@ -99,6 +99,9 @@ export class ContainerWrapper extends React.PureComponent {
         const borderColor = styleDefinition.borderColor;
         computedStyles.push({ borderWidth: borderThickness, borderColor: Utils.hexToRGB(borderColor) });
 
+        
+        // padding
+        const padding = hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
         if (this.props.containerStyle) {
             computedStyles.push({ padding: Constants.containerPadding });
         } else if(this.payload.parent && this.payload.parent.type === Constants.TypeAdaptiveCard) { //Apply padding only to the top root container

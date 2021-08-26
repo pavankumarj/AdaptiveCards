@@ -77,13 +77,13 @@ export default class ElementWrapper extends React.Component {
 			);
 			switch (verticalContentAlignment) {
 				case Enums.VerticalAlignment.Center:
-					computedStyles.push({ flex: 1, justifyContent: Constants.CenterString });
+					computedStyles.push({ justifyContent: Constants.CenterString });
 					break;
 				case Enums.VerticalAlignment.Bottom:
-					computedStyles.push({ flex: 1, justifyContent: Constants.FlexEnd });
+					computedStyles.push({ justifyContent: Constants.FlexEnd });
 					break;
 				default:
-					computedStyles.push({ flex: 1, justifyContent: Constants.FlexStart });
+					computedStyles.push({ justifyContent: Constants.FlexStart });
 					break;
 			}
 		}
