@@ -113,7 +113,7 @@ export class ActionWrapper extends React.Component {
 	render() {
 		return (<InputContextConsumer>
 			{({ onExecuteAction, onParseError }) =>
-				<View>
+				<View style={this.props.actionStyle}>
 					<View style={[styles.actionButtonContainer, this.getActionOrientation(), this.getActionAlignment()]}>
 						{this.parseActionsArray(onParseError)}
 					</View>

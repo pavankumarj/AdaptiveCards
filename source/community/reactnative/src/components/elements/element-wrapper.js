@@ -56,10 +56,19 @@ export default class ElementWrapper extends React.Component {
 	getComputedStyles = () => {
 		const payload = this.props.json;
 		const receivedStyles = this.props.style;
-
 		let computedStyles = [styles.inputContainer, receivedStyles];
 
-		if (payload.parent && payload.parent["verticalContentAlignment"] && payload.type !== Constants.TypeColumnSet) {
+		// height 
+		const height = payload.height || false;
+		if (height) {
+			const heightEnumValue = Utils.parseHostConfigEnum(
+				Enums.Height,
+				payload.height,
+				Enums.Height.Auto);
+			const height = this.props.configManager.hostConfig.getEffectiveHeight(heightEnumValue);
+			computedStyles.push({ flex: height });
+		}
+		if (payload.parent && payload.parent["verticalContentAlignment"] && payload.parent.type === Constants.TypeColumn) {
 			// vertical content alignment
 			let verticalContentAlignment = Utils.parseHostConfigEnum(
 				Enums.VerticalAlignment,
@@ -76,17 +85,6 @@ export default class ElementWrapper extends React.Component {
 				default:
 					computedStyles.push({ flex: 1, justifyContent: Constants.FlexStart });
 					break;
-			}
-		} else {
-			// height 
-			const height = payload.height || false;
-			if (height) {
-				const heightEnumValue = Utils.parseHostConfigEnum(
-					Enums.Height,
-					payload.height,
-					Enums.Height.Auto);
-				const height = this.props.configManager.hostConfig.getEffectiveHeight(heightEnumValue);
-				computedStyles.push({ flex: height });
 			}
 		}
 

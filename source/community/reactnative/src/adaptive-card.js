@@ -19,6 +19,7 @@ import { ThemeConfig, defaultThemeConfig } from './utils/theme-config';
 import { ActionWrapper } from './components/actions/action-wrapper';
 import PropTypes from 'prop-types';
 import * as Utils from './utils/util';
+import * as Enums from './utils/enums';
 import { SelectAction } from './components/actions';
 import ResourceInformation from './utils/resource-information';
 import { ContainerWrapper } from './components/containers';
@@ -196,6 +197,9 @@ export default class AdaptiveCard extends React.Component {
 		//If contentHeight is passed by the user from adaptive card via props, we will set this as height
 		this.props.contentHeight && containerStyles.push({ height: this.props.contentHeight })
 
+		// padding
+        const padding = this.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
+
 		var adaptiveCardContent =
 			(
 				<ContainerWrapper configManager={this.configManager} style={containerStyles} json={this.state.cardModel}>
@@ -208,7 +212,7 @@ export default class AdaptiveCard extends React.Component {
 						scrollEnabled={this.props.cardScrollEnabled}>
 						{this.parsePayload()}
 						{!Utils.isNullOrEmpty(this.state.cardModel.actions) &&
-							<ActionWrapper configManager={this.configManager} actions={this.state.cardModel.actions} />}
+							<ActionWrapper configManager={this.configManager} actions={this.state.cardModel.actions} actionStyle={{ padding: padding }}/>}
 					</ScrollView>
 				</ContainerWrapper>
 			);
