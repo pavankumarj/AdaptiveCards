@@ -66,31 +66,49 @@ export class ContainerWrapper extends React.PureComponent {
 
         const { hostConfig } = this.props.configManager;
 
-        if (this.payload.parent && this.payload.parent["verticalContentAlignment"]) {
-            // vertical content alignment
-            let verticalContentAlignment = Utils.parseHostConfigEnum(
-                Enums.VerticalAlignment,
-                this.payload.parent["verticalContentAlignment"],
-                Enums.VerticalAlignment.Top
-            );
-            switch (verticalContentAlignment) {
-                case Enums.VerticalAlignment.Center:
-                    computedStyles.push({ flex:1, justifyContent: Constants.CenterString });
-                    break;
-                case Enums.VerticalAlignment.Bottom:
-                    computedStyles.push({ flex:1, justifyContent: Constants.FlexEnd });
-                    break;
-                default:
-                    computedStyles.push({ flex:1, justifyContent: Constants.FlexStart });
-                    break;
-            } 
-            //Constructing the vertical Content Alignment for nested containers
-            if(this.payload.parent.type === Constants.TypeContainer && this.payload.type === Constants.TypeContainer) {
-                this.payload.verticalContentAlignment = this.payload.parent["verticalContentAlignment"];
-            }
-        } else {
-            // vertical content alignment - Default is top
-            computedStyles.push({ justifyContent: Constants.FlexStart });
+        // if (this.payload.parent && this.payload.parent["verticalContentAlignment"]) {
+        //     // vertical content alignment
+        //     let verticalContentAlignment = Utils.parseHostConfigEnum(
+        //         Enums.VerticalAlignment,
+        //         this.payload.parent["verticalContentAlignment"],
+        //         Enums.VerticalAlignment.Top
+        //     );
+        //     switch (verticalContentAlignment) {
+        //         case Enums.VerticalAlignment.Center:
+        //             computedStyles.push({ flex:1, justifyContent: Constants.CenterString });
+        //             break;
+        //         case Enums.VerticalAlignment.Bottom:
+        //             computedStyles.push({ flex:1, justifyContent: Constants.FlexEnd });
+        //             break;
+        //         default:
+        //             computedStyles.push({ flex:1, justifyContent: Constants.FlexStart });
+        //             break;
+        //     } 
+        //     //Constructing the vertical Content Alignment for nested containers
+        //     if(this.payload.parent.type === Constants.TypeContainer && this.payload.type === Constants.TypeContainer) {
+        //         this.payload.verticalContentAlignment = this.payload.parent["verticalContentAlignment"];
+        //     }
+        // } else {
+        //     // vertical content alignment - Default is top
+        //     computedStyles.push({ justifyContent: Constants.FlexStart });
+        // }
+
+        // vertical content alignment
+        let verticalContentAlignment = Utils.parseHostConfigEnum(
+            Enums.VerticalAlignment,
+            this.payload["verticalContentAlignment"],
+            Enums.VerticalAlignment.Top
+        );
+        switch (verticalContentAlignment) {
+            case Enums.VerticalAlignment.Center:
+                computedStyles.push({ justifyContent: Constants.CenterString });
+                break;
+            case Enums.VerticalAlignment.Bottom:
+                computedStyles.push({ justifyContent: Constants.FlexEnd });
+                break;
+            default:
+                computedStyles.push({ justifyContent: Constants.FlexStart });
+                break;
         }
         computedStyles.push({ backgroundColor: Constants.TransparentString });
 
@@ -109,14 +127,23 @@ export class ContainerWrapper extends React.PureComponent {
         const borderColor = styleDefinition.borderColor;
         computedStyles.push({ borderWidth: borderThickness, borderColor: Utils.hexToRGB(borderColor) });
 
+        
+        // padding
+        const padding = hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
         if (this.props.containerStyle) {
             computedStyles.push({ padding: Constants.containerPadding });
+        } else {
+            computedStyles.push({ padding: padding });
         }
 
         // bleed
-        if (this.payload.bleed && this.props.containerStyle) {
-            computedStyles.push({ padding: -Constants.containerPadding });
-        }
+        if (this.payload.bleed) {
+            if(this.props.containerStyle) {
+                computedStyles.push({ padding: -Constants.containerPadding });
+            } else {
+                computedStyles.push({ padding: -padding });
+            }
+        } 
 
         // height 
         const payloadHeight = this.payload.height || false;
