@@ -65,6 +65,13 @@ export class ContainerWrapper extends React.PureComponent {
         let computedStyles = [];
         const { hostConfig } = this.props.configManager;
 
+        //Constructing the vertical Content Alignment for columnSet
+        if (this.payload.parent && this.payload.parent["verticalContentAlignment"]) {
+            if(this.payload.type === Constants.TypeColumnSet) {
+                this.payload.verticalContentAlignment = this.payload.parent["verticalContentAlignment"];
+            }
+        }
+
         // vertical content alignment
         let verticalContentAlignment = Utils.parseHostConfigEnum(
             Enums.VerticalAlignment,
