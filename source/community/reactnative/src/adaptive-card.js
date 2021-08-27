@@ -185,7 +185,10 @@ export default class AdaptiveCard extends React.Component {
 	}
 
 	getAdaptiveCardContent() {
-		let containerStyles = [styles.container]
+		// padding
+		const padding = this.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
+		let containerStyles = [{ padding: padding }]
+
 		//If containerStyle is passed by the user from adaptive card via props, we will override this style
 		this.props.containerStyle && containerStyles.push(this.props.containerStyle)
 
@@ -196,9 +199,6 @@ export default class AdaptiveCard extends React.Component {
 
 		//If contentHeight is passed by the user from adaptive card via props, we will set this as height
 		this.props.contentHeight && containerStyles.push({ height: this.props.contentHeight })
-
-		// padding
-		const padding = this.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
 
 		var adaptiveCardContent =
 			(
@@ -212,7 +212,7 @@ export default class AdaptiveCard extends React.Component {
 						scrollEnabled={this.props.cardScrollEnabled}>
 						{this.parsePayload()}
 						{!Utils.isNullOrEmpty(this.state.cardModel.actions) &&
-							<ActionWrapper configManager={this.configManager} actions={this.state.cardModel.actions} actionStyle={{ padding: padding }} />}
+							<ActionWrapper configManager={this.configManager} actions={this.state.cardModel.actions} />}
 					</ScrollView>
 				</ContainerWrapper>
 			);
@@ -334,9 +334,6 @@ AdaptiveCard.defaultProps = {
 };
 
 const styles = StyleSheet.create({
-	container: {
-		padding: 10
-	},
 	actionContainer: {
 		marginVertical: 10
 	},

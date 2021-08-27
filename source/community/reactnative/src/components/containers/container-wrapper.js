@@ -108,21 +108,15 @@ export class ContainerWrapper extends React.PureComponent {
 
         
         // padding
-        const padding = hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
-        if (this.props.containerStyle) {
-            computedStyles.push({ padding: Constants.containerPadding });
-        } else if(this.payload.parent && this.payload.parent.type === Constants.TypeAdaptiveCard) { //Apply padding only to the top root container
-            computedStyles.push({ padding: padding });
+        // const padding = hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
+        if (this.payload.style) {
+            computedStyles.push({ padding: Constants.containerPadding});
         }
 
         // bleed
-        if (this.payload.bleed) {
-            if(this.props.containerStyle) {
-                computedStyles.push({ padding: -Constants.containerPadding });
-            } else if(this.payload.parent && this.payload.parent.type === Constants.TypeAdaptiveCard) {
-                computedStyles.push({ padding: -padding });
-            }
-        } 
+        if (this.payload.bleed && this.payload.style) {
+            computedStyles.push({ padding: -Constants.containerPadding});
+        }
 
         // height 
         const payloadHeight = this.payload.height || false;
