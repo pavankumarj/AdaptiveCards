@@ -63,35 +63,14 @@ export class ContainerWrapper extends React.PureComponent {
      */
     getComputedStyles = () => {
         let computedStyles = [];
-
         const { hostConfig } = this.props.configManager;
 
-        // if (this.payload.parent && this.payload.parent["verticalContentAlignment"]) {
-        //     // vertical content alignment
-        //     let verticalContentAlignment = Utils.parseHostConfigEnum(
-        //         Enums.VerticalAlignment,
-        //         this.payload.parent["verticalContentAlignment"],
-        //         Enums.VerticalAlignment.Top
-        //     );
-        //     switch (verticalContentAlignment) {
-        //         case Enums.VerticalAlignment.Center:
-        //             computedStyles.push({ flex:1, justifyContent: Constants.CenterString });
-        //             break;
-        //         case Enums.VerticalAlignment.Bottom:
-        //             computedStyles.push({ flex:1, justifyContent: Constants.FlexEnd });
-        //             break;
-        //         default:
-        //             computedStyles.push({ flex:1, justifyContent: Constants.FlexStart });
-        //             break;
-        //     } 
-        //     //Constructing the vertical Content Alignment for nested containers
-        //     if(this.payload.parent.type === Constants.TypeContainer && this.payload.type === Constants.TypeContainer) {
-        //         this.payload.verticalContentAlignment = this.payload.parent["verticalContentAlignment"];
-        //     }
-        // } else {
-        //     // vertical content alignment - Default is top
-        //     computedStyles.push({ justifyContent: Constants.FlexStart });
-        // }
+        //Constructing the vertical Content Alignment for columnSet
+        if (this.payload.parent && this.payload.parent["verticalContentAlignment"]) {
+            if(this.payload.type === Constants.TypeColumnSet) {
+                this.payload.verticalContentAlignment = this.payload.parent["verticalContentAlignment"];
+            }
+        }
 
         // vertical content alignment
         let verticalContentAlignment = Utils.parseHostConfigEnum(
@@ -129,21 +108,15 @@ export class ContainerWrapper extends React.PureComponent {
 
         
         // padding
-        const padding = hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
-        if (this.props.containerStyle) {
-            computedStyles.push({ padding: Constants.containerPadding });
-        } else {
-            computedStyles.push({ padding: padding });
+        // const padding = hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
+        if (this.payload.style) {
+            computedStyles.push({ padding: Constants.containerPadding});
         }
 
         // bleed
-        if (this.payload.bleed) {
-            if(this.props.containerStyle) {
-                computedStyles.push({ padding: -Constants.containerPadding });
-            } else {
-                computedStyles.push({ padding: -padding });
-            }
-        } 
+        if (this.payload.bleed && this.payload.style) {
+            computedStyles.push({ padding: -Constants.containerPadding});
+        }
 
         // height 
         const payloadHeight = this.payload.height || false;
