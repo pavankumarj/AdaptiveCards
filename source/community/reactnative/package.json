@@ -1,7 +1,7 @@
 {
   "name": "adaptivecards-reactnative",
   "description": "AdaptiveCards implementation in ReactNative",
-  "version": "2.2.9",
+  "version": "2.2.10",
   "keywords": [
     "adaptivecards",
     "cards",
@@ -23,7 +23,7 @@
     "lint": "eslint ."
   },
   "repository": {
-    "url": "https://github.com/Microsoft/AdaptiveCards/tree/main/source/community/reactnative",
+    "url": "https://github.com/BigThinkcode/AdaptiveCards/tree/main/source/community/reactnative",
     "type": "git"
   },
   "files": [
