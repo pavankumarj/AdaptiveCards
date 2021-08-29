@@ -57,6 +57,7 @@ export class RichTextBlock extends React.Component {
      * @returns {object} constructed select Action component
      */
     addActionElement = (textRun, index) => {
+        let textRunStyle = textRun.underline ? [styles.text, styles.underlineStyle] : [styles.text];
         return (
             <Text key={"text-wrapper" + index} onPress={() => { this.onClickHandle(textRun.selectAction) }}>
                 <Label
@@ -68,7 +69,7 @@ export class RichTextBlock extends React.Component {
                     wrap={textRun.wrap}
                     align={textRun.horizontalAlignment}
                     maxLines={textRun.maxLines}
-                    style={styles.text}
+                    style={textRunStyle}
                     configManager={this.props.configManager}
                     onClick={() => this.onClickHandle(textRun.selectAction)} />
             </Text>
@@ -102,7 +103,8 @@ export class RichTextBlock extends React.Component {
         paragraph.inlines && paragraph.inlines.forEach((textRun, index) => {
             if (textRun.type.toLowerCase() == Constants.TextRunString) {
                 index > 0 && textRunElements.push(<Text key={"white-sapce-text" + index}>{" "}</Text>);
-                let textRunStyle = textRun.highlight ? [styles.text, { backgroundColor: this.props.configManager.hostConfig.richTextBlock.highlightColor }] : styles.text;
+                let textRunStyle = textRun.highlight ? [styles.text, { backgroundColor: this.props.configManager.hostConfig.richTextBlock.highlightColor }] : [styles.text];
+                textRun.underline && textRunStyle.push(styles.underlineStyle)
                 textRunElements.push(
                     textRun.selectAction ? this.addActionElement(textRun, index) :
                         <Label
@@ -147,6 +149,10 @@ const styles = StyleSheet.create({
     },
     text: {
         width: Constants.FullWidth
-    }
+    },
+    underlineStyle: {
+		color: 'blue',
+		textDecorationLine: 'underline',
+	}
 });
 

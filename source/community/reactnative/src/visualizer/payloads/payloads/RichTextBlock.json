@@ -24,6 +24,7 @@
                             "type": "TextRun",
                             "text": "5/23/2016",
                             "color": "good",
+                            "underline": true,
                             "selectAction": {
                                 "type": "Action.Submit",
                                 "title": "cool link",
@@ -33,7 +34,8 @@
                         {
                             "type": "TextRun",
                             "text": "This is highlighted",
-                            "highlight": true
+                            "highlight": true,
+                            "underline": true
                         },
                         {
                             "type": "TextRun",
@@ -56,6 +58,7 @@
                         {
                             "type": "TextRun",
                             "text": "**Chennai on**",
+                            "underline": true,
                             "selectAction": {
                                 "type": "Action.OpenUrl",
                                 "title": "5/23/2016",
