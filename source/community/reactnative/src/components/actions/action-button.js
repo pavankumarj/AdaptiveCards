@@ -62,6 +62,9 @@ export class ActionButton extends React.Component {
 		} else computedStyles.push({ flexGrow: 1 })
 		if (this.hostConfig.actions.actionsOrientation === Enums.Orientation.Horizontal) {
 			computedStyles.push({ maxWidth: this.props.maxWidth })
+		} else {
+			//Vertical actionsOrientation and if it is stretch, the width will be 100%
+			this.hostConfig.actions.actionAlignment === Enums.ActionAlignment.Stretch && computedStyles.push({ width: "100%" })
 		}
 		return computedStyles;
 	}
@@ -186,6 +189,17 @@ export class ActionButton extends React.Component {
 	getButtonStyles = () => {
 		let computedStyles = [this.styleConfig.button,
 		this.styleConfig.actionIconFlex, styles.button];
+		if(this.hostConfig.actions.actionsOrientation === Enums.Orientation.Horizontal) {
+			if(this.props.isFirst && this.props.isLast) {
+				//Only one lement...Margin not required
+			} else if(this.props.isFirst) {
+				computedStyles.push({marginRight: 5})
+			} else if(this.props.isLast) {
+				computedStyles.push({marginLeft: 5})
+			} else {
+				computedStyles.push({marginRight:5, marginLeft: 5})
+			}
+		}
 
 		if (this.sentiment == Enums.Sentiment.Positive) {
 			computedStyles.push(this.styleConfig.defaultPositiveButtonBackgroundColor);
@@ -245,8 +259,7 @@ const styles = StyleSheet.create({
 		justifyContent: Constants.CenterString,
 		padding: 10,
 		marginBottom: 10,
-		flexGrow: 1,
-		marginHorizontal: 5
+		flexGrow: 1
 	},
 	buttonIcon: {
 		marginLeft: 5,
