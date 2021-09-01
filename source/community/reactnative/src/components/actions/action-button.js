@@ -61,7 +61,7 @@ export class ActionButton extends React.Component {
 			computedStyles.push({ flexGrow: 0 })
 		} else computedStyles.push({ flexGrow: 1 })
 		if (this.hostConfig.actions.actionsOrientation === Enums.Orientation.Horizontal) {
-			computedStyles.push({ maxWidth: this.props.maxWidth })
+			this.hostConfig.actions.actionAlignment != Enums.ActionAlignment.Stretch && computedStyles.push({ maxWidth: this.props.maxWidth })
 		} else {
 			//Vertical actionsOrientation and if it is stretch, the width will be 100%
 			this.hostConfig.actions.actionAlignment === Enums.ActionAlignment.Stretch && computedStyles.push({ width: "100%" })
@@ -75,7 +75,8 @@ export class ActionButton extends React.Component {
 		}
 		this.parsePayload();
 		let computedStyle = [this.getActionAlignment()];
-		computedStyle.push({ opacity: this.payload.isEnabled ? 1.0 : 0.4 })
+		const isEnabled = this.payload.isEnabled == undefined ? true : this.payload.isEnabled //Defautl value is true...We are applying for handling the custom button property
+		computedStyle.push({ opacity: isEnabled ? 1.0 : 0.4 })
 		const ButtonComponent = Platform.OS === Constants.PlatformAndroid ? TouchableNativeFeedback : TouchableOpacity;
 		return (<InputContextConsumer>
 			{({ onExecuteAction, inputArray, addResourceInformation, toggleVisibilityForElementWithID }) => {
@@ -86,7 +87,7 @@ export class ActionButton extends React.Component {
 
 				return <ButtonComponent
 					style={computedStyle}
-					disabled={!this.payload.isEnabled}
+					disabled={!isEnabled}
 					accessible={true}
 					accessibilityLabel={this.altText}
 					accessibilityRole={Constants.Button}
