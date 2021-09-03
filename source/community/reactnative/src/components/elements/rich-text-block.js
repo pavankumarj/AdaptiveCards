@@ -151,7 +151,6 @@ const styles = StyleSheet.create({
         width: Constants.FullWidth
     },
     underlineStyle: {
-		color: 'blue',
 		textDecorationLine: 'underline',
 	}
 });
