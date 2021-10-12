@@ -15,7 +15,7 @@
 #
 # To build pic2card with backend TFS service.
 #   $ docker build --build-arg tfs_enable=tfs --build-arg TARGET_API=tfs \
-#      -t imaginea.azurecr.io/imaginea/api_tfs_mystique:v0.6 .
+#      -t docker pull ghcr.io/bigthinkcode/pic2card-rcnn:v1.12 .
 #
 ARG TARGET_API=frozen_graph
 

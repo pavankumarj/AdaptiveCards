@@ -154,7 +154,6 @@ def convert(xml__files, json_file):  # pylint: disable=too-many-locals
         json_str = json.dumps(json_dict)
         json_fp.write(json_str)
 
-
 if __name__ == "__main__":
     import argparse
 
