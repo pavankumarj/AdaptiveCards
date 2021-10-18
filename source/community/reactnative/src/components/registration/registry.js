@@ -181,7 +181,9 @@ export class Registry {
 				}
 				if (isValid) {
 					if (element.isVisible !== false) {
-						const elementKey = Utils.isNullOrEmpty(element.id) ? `${element.type}-${index}` : `${element.type}-${index}-${element.id}`;
+						const addIdToKey = element.type !== 'Image' && element.type !== 'Icon' && element.type !== 'Container' && element.type !== 'Column' && element.type !== 'ColumnSet' && element.type !== 'ImageSet';
+						const elementKey = Utils.isNullOrEmpty(element.id) ? `${element.type}-${index}` : addIdToKey ? `${element.type}-${index}-${element.id}` : `${element.type}-${index}`;
+						
 						return (<Element json={element} key={elementKey} />);
 					}
 				}

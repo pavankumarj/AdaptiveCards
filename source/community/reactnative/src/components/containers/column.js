@@ -125,6 +125,8 @@ export class Column extends React.Component {
 	}
 
 	render() {
+		this.hostConfig = this.props.configManager.hostConfig;
+		this.column = this.props.json;
 		const { isFirst, isLast } = this.props;
 		const separator = this.column.separator || false;
 		let containerViewStyle = [{
