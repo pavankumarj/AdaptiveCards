@@ -111,7 +111,9 @@ export default class Renderer extends React.Component {
         var context = {
             $root: {
                 "name": "Matt",
-                "photo": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg",
+                "photo": this.state.forceUpdate %2 === 0 ?
+                    "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg"
+                    : "https://i.pinimg.com/originals/22/28/af/2228afa177aa08b6664c76bd9d7ec56c.jpg",
                 "manager": {
                     "name": "Thomas",
                     "title": "PM Lead"
@@ -137,7 +139,9 @@ export default class Renderer extends React.Component {
                 "description": "Now that we have defined the main rules and features of the format, we need to produce a schema and publish it to GitHub. The schema will be the starting point of our reference documentation.",
                 "creator": {
                     "name": "Matt Hidinger",
-                    "profileImage": "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg"
+                    "profileImage": this.state.forceUpdate %2 === 0 ?
+                    "https://pbs.twimg.com/profile_images/3647943215/d7f12830b3c17a5a9e4afcc370e3a37e_400x400.jpeg"
+                    : "https://i.pinimg.com/originals/22/28/af/2228afa177aa08b6664c76bd9d7ec56c.jpg"
                 },
                 "createdUtc": "2017-02-14T06:08:39Z",
                 "viewUrl": "https://adaptivecards.io",
