@@ -35,6 +35,7 @@ import AdaptiveCard from 'adaptivecards-reactnative'
 Prop | Type | Description | Required
 ------------ | ------------- | ------------ | ------------ |
 **payload** | `{object}` | JSON payload adhering to the [schema](https://docs.microsoft.com/en-us/adaptive-cards/authoring-cards/card-schema) | YES
+**updateKey** | `{number}` | A prop that can be used to signal that payload has changed and the card should be updated. On change, Adaptive Card will update the card with the latest payload. | NO
 **hostConfig** | `{object}` | JSON Host config to override based on [schema](https://docs.microsoft.com/en-us/adaptive-cards/rendering-cards/host-config) | NO
 **themeConfig** | `{object}` | JSON Theme Config to customize styles | NO
 **onExecuteAction** | `{Event Handler}` | Method to be executed on card actions | NO
