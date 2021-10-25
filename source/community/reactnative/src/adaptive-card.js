@@ -79,7 +79,6 @@ export default class AdaptiveCard extends React.Component {
 	componentDidUpdate(prevProps) {
 		if (prevProps.updateKey !== this.props.updateKey) {
 			inputArray = {};
-			version = "2.0"; // client supported version
 			resourceInformationArray = [];
 
 			this.payload = this.props.payload;
