@@ -13,6 +13,7 @@ import AdaptiveCard from 'adaptivecards-reactnative'
 
 ``` html
 <AdaptiveCard payload={} 
+               updateKey={}
                hostConfig={}
                themeConfig={}
                onExecuteAction={} 
@@ -129,7 +130,7 @@ var context = {
 templatePayload = template.expand(context);
 
 //Render the adaptive card with templatePayload
-<AdaptiveCard payload={templatePayload}/>
+<AdaptiveCard payload={templatePayload} updateKey={Date.now()}/>
 ```
 
 ## Theme Config
