@@ -67,6 +67,11 @@ export default class Renderer extends React.Component {
         input: {
             placeholderTextColor: Grey300
         },
+        inputLabel: {
+            fontSize: 13,
+            lineHeight: 18,
+            color: '#6E6E6E'
+        },
         inputDate: {
             placeholderTextColor: Grey300
         },

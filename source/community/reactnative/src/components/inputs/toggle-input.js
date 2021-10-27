@@ -95,7 +95,7 @@ export class ToggleInput extends React.Component {
 									}}>
 								</Switch>
 								<View style={styles.titleContainer} importantForAccessibility='no-hide-descendants'>
-									<InputLabel configManager={this.props.configManager} isRequired={this.isRequired} wrap={this.wrapText} style={styles.title} label={this.title}/>
+									<InputLabel configManager={this.props.configManager} isRequired={this.isRequired} wrap={this.wrapText} style={styles.title} label={this.title} applyStyleConfig={false}/>
 								</View>
 							</View>
 						)
