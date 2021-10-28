@@ -84,7 +84,7 @@ export class ToggleInput extends React.Component {
 							>
 								<Switch
 									trackColor={this.props.configManager.themeConfig.switch[Platform.OS].trackColor}
-									thumbColor={this.props.configManager.themeConfig.switch[Platform.OS].thumbColor}
+									thumbColor={toggleValue ? this.props.configManager.themeConfig.switch[Platform.OS].thumbColor?.true : this.props.configManager.themeConfig.switch[Platform.OS].thumbColor?.false }
 									ios_backgroundColor={this.props.configManager.themeConfig.switch[Platform.OS].ios_backgroundColor}
 									accessible={false}
 									importantForAccessibility='no-hide-descendants'
