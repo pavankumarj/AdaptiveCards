@@ -88,6 +88,12 @@ export default class ElementWrapper extends React.Component {
 			}
 		}
 
+		// padding
+        if(payload.parent && payload.parent.type === Constants.TypeAdaptiveCard) {
+            const padding = this.props.configManager.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
+            computedStyles.push({marginHorizontal: padding});
+        }
+
 		return computedStyles;
 	}
 

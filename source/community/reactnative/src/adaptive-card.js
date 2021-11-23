@@ -209,7 +209,7 @@ export default class AdaptiveCard extends React.Component {
 	getAdaptiveCardContent() {
 		// padding
 		const padding = this.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
-		let containerStyles = [{ padding: padding }]
+		let containerStyles = [{ paddingTop: padding, paddingBottom: padding }]
 
 		//If containerStyle is passed by the user from adaptive card via props, we will override this style
 		this.props.containerStyle && containerStyles.push(this.props.containerStyle)
