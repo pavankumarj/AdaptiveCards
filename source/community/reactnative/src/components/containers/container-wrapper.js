@@ -68,11 +68,14 @@ export class ContainerWrapper extends React.PureComponent {
      */
     hasParentStyle(payload) {
         if (payload.parent) {
-            if (payload.parent['style'] && payload.parent['style'] != Enums.ContainerStyle.Default) {
-                return true
+            if (
+                payload.parent['style'] &&
+                payload.parent['style'] != Enums.ContainerStyle.Default
+            ) {
+                return true;
             }
         } else {
-            this.hasParentStyle(payload.parent)
+            this.hasParentStyle(payload.parent);
         }
     }
 
@@ -80,11 +83,25 @@ export class ContainerWrapper extends React.PureComponent {
      * @description The method will return true, if any of the parent containers is column.
      */
     applyBleedMarginHorizontal(computedStyles) {
-        const padding = this.props.configManager.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
+        const padding = this.props.configManager.hostConfig.getEffectiveSpacing(
+            Enums.Spacing.Padding,
+        );
         if (this.payload.type == Constants.TypeColumn) {
-            (this.props.isFirst || this.props.isLast) && computedStyles.push({marginHorizontal: -padding})
+            //If parent that means columnset have style other than default, then we need to apply padding as -padding otherwise padding as 0
+            const marginValue =
+                this.payload.parent['style'] &&
+                this.payload.parent['style'] != Enums.ContainerStyle.Default
+                    ? 0
+                    : -padding;
+            if (this.props.isFirst) {
+                //First column
+                computedStyles.push({marginLeft: marginValue});
+            } else if (this.props.isLast) {
+                //Last column
+                computedStyles.push({marginRight: marginValue});
+            }
         } else {
-            computedStyles.push({marginHorizontal: -padding})
+            computedStyles.push({marginHorizontal: -padding});
         }
     }
 
@@ -96,12 +113,19 @@ export class ContainerWrapper extends React.PureComponent {
         // If bleed is true and style is not undefined and Default, then we will remove marginHorizontal only if any of the parent containers having the style applied other than default and direct parent is adaptive card Otherwise, we will remove padding from the marginHorizontal.
         // If bleed is true and style is not undefined and Other than Default, then we will remove marginHorizontal only if the direct parent is adaptive card Otherwise, we will remove padding from the marginHorizontal.
         if (this.payload.bleed && this.payload.style) {
-            const padding = this.props.configManager.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
-            if(this.payload.style == Enums.ContainerStyle.Default) {
-                if(this.hasParentStyle(this.payload)) 
-                    (this.payload.parent && this.payload.parent.type === Constants.TypeAdaptiveCard) ? computedStyles.push({marginHorizontal: 0}) : this.applyBleedMarginHorizontal(computedStyles);
+            if (this.payload.style == Enums.ContainerStyle.Default) {
+                if (this.hasParentStyle(this.payload))
+                    this.payload.parent &&
+                    this.payload.parent.type === Constants.TypeAdaptiveCard
+                        ? computedStyles.push({marginHorizontal: 0})
+                        : this.payload.parent.type != Constants.TypeColumn &&
+                          this.applyBleedMarginHorizontal(computedStyles);
             } else {
-                (this.payload.parent && this.payload.parent.type === Constants.TypeAdaptiveCard) ? computedStyles.push({marginHorizontal: 0}) : this.applyBleedMarginHorizontal(computedStyles);
+                this.payload.parent &&
+                this.payload.parent.type === Constants.TypeAdaptiveCard
+                    ? computedStyles.push({marginHorizontal: 0})
+                    : this.payload.parent.type != Constants.TypeColumn &&
+                      this.applyBleedMarginHorizontal(computedStyles);
             }
         }
     }
@@ -115,13 +139,40 @@ export class ContainerWrapper extends React.PureComponent {
         // We will add marginHorizontal for the adaptive card root containers...Top and bottom martgin is added in the adaptive card directly.
         // If style is not undefined and Default, then we will add padding and marginTop only if any of the parent containers having the style applied other than default.
         // If style is not undefined and Other than Default, then we will add padding and marginTop
-        const padding = this.props.configManager.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
-        this.payload.parent && this.payload.parent.type === Constants.TypeAdaptiveCard && computedStyles.push({marginHorizontal: padding, marginTop: Constants.containerPadding});
+        const padding = this.props.configManager.hostConfig.getEffectiveSpacing(
+            Enums.Spacing.Padding,
+        );
+        this.payload.parent &&
+            this.payload.parent.type === Constants.TypeAdaptiveCard &&
+            computedStyles.push({
+                //If payload type is columnset and it has style other than default, then apply marginHorizontal as padding
+                marginHorizontal:
+                    this.payload.type === Constants.TypeColumnSet
+                        ? this.payload['style'] &&
+                          this.payload['style'] != Enums.ContainerStyle.Default
+                            ? padding
+                            : 0
+                        : padding,
+                marginTop: Constants.containerPadding,
+            });
         if (this.payload.style) {
-            if(this.payload.style == Enums.ContainerStyle.Default) {
-                this.hasParentStyle(this.payload) && computedStyles.push({padding: padding, marginTop: this.payload.type != Constants.TypeColumn ? Constants.containerPadding : 0});
+            if (this.payload.style == Enums.ContainerStyle.Default) {
+                this.hasParentStyle(this.payload) &&
+                    computedStyles.push({
+                        padding: padding,
+                        marginTop:
+                            this.payload.type != Constants.TypeColumn
+                                ? Constants.containerPadding
+                                : 0,
+                    });
             } else {
-                computedStyles.push({padding: padding, marginTop: this.payload.type != Constants.TypeColumn ? Constants.containerPadding : 0});
+                computedStyles.push({
+                    padding: padding,
+                    marginTop:
+                        this.payload.type != Constants.TypeColumn
+                            ? Constants.containerPadding
+                            : 0,
+                });
             }
         }
     }
@@ -190,10 +241,10 @@ export class ContainerWrapper extends React.PureComponent {
             borderWidth: borderThickness,
             borderColor: Utils.hexToRGB(borderColor),
         });
-        
+
         this.applyContainerStyle(computedStyles);
         this.applyBleedStyle(computedStyles);
-        
+
         // height
         const payloadHeight = this.payload.height || false;
         if (payloadHeight) {
