@@ -27,20 +27,30 @@ export class ContainerWrapper extends React.PureComponent {
         const computedStyles = this.getComputedStyles();
 
         return Utils.isNullOrEmpty(this.payload.altText) ? (
-            <View style={[computedStyles, receivedStyles]}>
-                {!Utils.isNullOrEmpty(this.payload.backgroundImage)
-                    ? this.getBackgroundImageContainer()
-                    : this.props.children}
-            </View>
+            <React.Fragment>
+                {!this.props.isFirst &&
+                    this.payload.type != Constants.TypeColumn &&
+                    this.getSpacingElement()}
+                <View style={[computedStyles, receivedStyles]}>
+                    {!Utils.isNullOrEmpty(this.payload.backgroundImage)
+                        ? this.getBackgroundImageContainer()
+                        : this.props.children}
+                </View>
+            </React.Fragment>
         ) : (
-            <View
-                accessible={true}
-                accessibilityLabel={this.payload.altText}
-                style={[computedStyles, receivedStyles]}>
-                {!Utils.isNullOrEmpty(this.payload.backgroundImage)
-                    ? this.getBackgroundImageContainer()
-                    : this.props.children}
-            </View>
+            <React.Fragment>
+                {!this.props.isFirst &&
+                    this.payload.type != Constants.TypeColumn &&
+                    this.getSpacingElement()}
+                <View
+                    accessible={true}
+                    accessibilityLabel={this.payload.altText}
+                    style={[computedStyles, receivedStyles]}>
+                    {!Utils.isNullOrEmpty(this.payload.backgroundImage)
+                        ? this.getBackgroundImageContainer()
+                        : this.props.children}
+                </View>
+            </React.Fragment>
         );
     }
 
@@ -135,10 +145,9 @@ export class ContainerWrapper extends React.PureComponent {
      */
     applyContainerStyle(computedStyles) {
         // Padding
-        // Adding the marginTop for all valid below scenarios
         // We will add marginHorizontal for the adaptive card root containers...Top and bottom martgin is added in the adaptive card directly.
-        // If style is not undefined and Default, then we will add padding and marginTop only if any of the parent containers having the style applied other than default.
-        // If style is not undefined and Other than Default, then we will add padding and marginTop
+        // If style is not undefined and Default, then we will add padding only if any of the parent containers having the style applied other than default.
+        // If style is not undefined and Other than Default, then we will add padding
         const padding = this.props.configManager.hostConfig.getEffectiveSpacing(
             Enums.Spacing.Padding,
         );
@@ -153,25 +162,16 @@ export class ContainerWrapper extends React.PureComponent {
                             ? padding
                             : 0
                         : padding,
-                marginTop: Constants.containerPadding,
             });
         if (this.payload.style) {
             if (this.payload.style == Enums.ContainerStyle.Default) {
                 this.hasParentStyle(this.payload) &&
                     computedStyles.push({
                         padding: padding,
-                        marginTop:
-                            this.payload.type != Constants.TypeColumn
-                                ? Constants.containerPadding
-                                : 0,
                     });
             } else {
                 computedStyles.push({
                     padding: padding,
-                    marginTop:
-                        this.payload.type != Constants.TypeColumn
-                            ? Constants.containerPadding
-                            : 0,
                 });
             }
         }
@@ -261,5 +261,50 @@ export class ContainerWrapper extends React.PureComponent {
         }
 
         return computedStyles;
+    };
+
+    /**
+     * @description Return the element for spacing and/or separator
+     * @returns {object} View element with spacing based on `spacing` and `separator` prop
+     */
+    getSpacingElement = () => {
+        const {hostConfig, styleConfig} = this.props.configManager;
+        const spacingEnumValue = Utils.parseHostConfigEnum(
+            Enums.Spacing,
+            this.payload.spacing,
+            Enums.Spacing.Default,
+        );
+        const padding = this.props.configManager.hostConfig.getEffectiveSpacing(
+            Enums.Spacing.Padding,
+        );
+        const spacing = hostConfig.getEffectiveSpacing(spacingEnumValue);
+        const {isFirst} = this.props; //isFirst represent, it is first element
+
+        let computedStyles = [{flex: 1}];
+
+        this.payload.parent &&
+            this.payload.parent.type === Constants.TypeAdaptiveCard &&
+            computedStyles.push({
+                //If payload type is columnset and it has style other than default, then apply marginHorizontal as padding
+                marginHorizontal:
+                    this.payload.type === Constants.TypeColumnSet
+                        ? this.payload['style'] &&
+                          this.payload['style'] != Enums.ContainerStyle.Default
+                            ? padding
+                            : 0
+                        : padding,
+            });
+
+        this.applyBleedStyle(computedStyles);
+        // spacing styles
+        return (
+            <View style={computedStyles}>
+                {<View style={{height: spacing / 2}} />}
+                {this.payload.separator && !isFirst && (
+                    <View style={styleConfig.separatorStyle} />
+                )}
+                {<View style={{height: spacing / 2}} />}
+            </View>
+        );
     };
 }

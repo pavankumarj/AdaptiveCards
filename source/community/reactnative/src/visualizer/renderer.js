@@ -67,6 +67,10 @@ export default class Renderer extends React.Component {
             extraLarge: 40,
             padding: 10
         },
+        "separator": {
+            "lineThickness": 1,
+            "lineColor": "#EEEEEE"
+        },
         "containerStyles": {
             "default": {
                 "foregroundColors": {
