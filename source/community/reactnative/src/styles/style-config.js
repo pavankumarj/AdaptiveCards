@@ -90,6 +90,12 @@ export class StyleConfig {
 			},
 			dateTimePicker: {
 				...this.themeConfig.dateTimePicker[Platform.OS]
+			},
+			inlineAction: {
+				...this.themeConfig.inlineAction[Platform.OS]
+			},
+			inlineActionText: {
+				...this.themeConfig.inlineActionText[Platform.OS]
 			}
 		};
 		return styles;
