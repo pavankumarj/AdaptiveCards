@@ -63,12 +63,16 @@ export class ContainerWrapper extends React.PureComponent {
                 url: this.payload.backgroundImage,
             };
         }
+        // padding
+		const padding = this.props.configManager.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
         return (
             <React.Fragment>
                 <BackgroundImage
                     backgroundImage={this.payload.backgroundImage}
                 />
-                {this.props.children}
+                <View style={{paddingTop: padding, paddingBottom: padding}}>
+                    {this.props.children}
+                </View>
             </React.Fragment>
         );
     };
@@ -122,13 +126,13 @@ export class ContainerWrapper extends React.PureComponent {
         // Bleed
         // If bleed is true and style is not undefined and Default, then we will remove marginHorizontal only if any of the parent containers having the style applied other than default and direct parent is adaptive card Otherwise, we will remove padding from the marginHorizontal.
         // If bleed is true and style is not undefined and Other than Default, then we will remove marginHorizontal only if the direct parent is adaptive card Otherwise, we will remove padding from the marginHorizontal.
-        if (this.payload.bleed && this.payload.style) {
+        if(this.payload.bleed &&  this.payload.parent &&
+            this.payload.parent.type === Constants.TypeAdaptiveCard) {
+                computedStyles.push({marginHorizontal: 0})
+        } else if (this.payload.bleed && this.payload.style) {
             if (this.payload.style == Enums.ContainerStyle.Default) {
                 if (this.hasParentStyle(this.payload))
-                    this.payload.parent &&
-                    this.payload.parent.type === Constants.TypeAdaptiveCard
-                        ? computedStyles.push({marginHorizontal: 0})
-                        : this.payload.parent.type != Constants.TypeColumn &&
+                   this.payload.parent.type != Constants.TypeColumn &&
                           this.applyBleedMarginHorizontal(computedStyles);
             } else {
                 this.payload.parent &&
@@ -165,7 +169,7 @@ export class ContainerWrapper extends React.PureComponent {
             });
         if (this.payload.style) {
             if (this.payload.style == Enums.ContainerStyle.Default) {
-                this.hasParentStyle(this.payload) &&
+                (this.hasParentStyle(this.payload) || (this.payload.parent && !Utils.isNullOrEmpty(this.payload.parent.backgroundImage))) &&
                     computedStyles.push({
                         padding: padding,
                     });
