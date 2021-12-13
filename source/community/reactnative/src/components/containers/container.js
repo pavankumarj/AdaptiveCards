@@ -6,8 +6,6 @@
 
 import React from 'react';
 import {
-	StyleSheet,
-	View,
 	Text
 } from 'react-native';
 
@@ -15,7 +13,6 @@ import { Registry } from '../registration/registry';
 import { SelectAction } from '../actions';
 import * as Constants from '../../utils/constants';
 import * as Utils from '../../utils/util';
-import * as Enums from '../../utils/enums';
 import { InputContext } from '../../utils/context';
 import { ContainerWrapper } from './';
 
@@ -106,9 +103,3 @@ export class Container extends React.Component {
 		return containerRender;
 	}
 };
-
-const styles = StyleSheet.create({
-	defaultBGStyle: {
-		backgroundColor: Constants.TransparentString,
-	},
-});
