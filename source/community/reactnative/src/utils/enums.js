@@ -191,5 +191,6 @@ export const ThemeElement = Object.freeze({
 	DateTimePicker: "dateTimePicker",
 	Switch: "switch",
 	InlineAction: "inlineAction",
-	InlineActionText: "inlineActionText"
+	InlineActionText: "inlineActionText",
+	ActionSet: "actionSet"
 });

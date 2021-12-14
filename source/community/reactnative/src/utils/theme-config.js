@@ -19,7 +19,8 @@ export class ThemeConfig {
         this.dateTimePicker = new Config(ThemeElement.DateTimePicker, obj)
         this.switch = new Config(ThemeElement.Switch, obj);
         this.inlineAction = new Config(ThemeElement.InlineAction, obj);
-        this.inlineActionText = new Config(ThemeElement.InlineActionText, obj)
+        this.inlineActionText = new Config(ThemeElement.InlineActionText, obj);
+		this.actionSet = new Config(ThemeElement.ActionSet, obj);
     }
 }
 
@@ -179,5 +180,6 @@ export const defaultThemeConfig = {
         ios_backgroundColor: undefined
     },
     inlineAction: {},
-    inlineActionText: {}
+    inlineActionText: {},
+	actionSet: {}
 }

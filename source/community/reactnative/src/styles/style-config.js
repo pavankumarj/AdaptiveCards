@@ -96,6 +96,9 @@ export class StyleConfig {
 			},
 			inlineActionText: {
 				...this.themeConfig.inlineActionText[Platform.OS]
+			},
+			actionSet: {
+				...this.themeConfig.actionSet[Platform.OS]
 			}
 		};
 		return styles;
