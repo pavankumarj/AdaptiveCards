@@ -86,7 +86,7 @@ export class ContainerWrapper extends React.PureComponent {
     /**
      * @description The method will return true, if any of the parent containers having the style applied other than default.
      */
-    hasParentStyle(payload) {
+    hasAncestorStyle(payload) {
         if (payload.parent) {
             if (
                 payload.parent['style'] &&
@@ -95,7 +95,21 @@ export class ContainerWrapper extends React.PureComponent {
                 return true;
             }
             // We will check for style in ancestors
-            return this.hasParentStyle(payload.parent);
+            return this.hasAncestorStyle(payload.parent);
+        } else {
+            return false;
+        }
+    }
+
+	/**
+     * @description The method will return true, if any of the ancestor containers have backgroundImage.
+     */
+    hasAncestorBackgroundImage(payload) {
+        if (payload.parent) {
+            if (!Utils.isNullOrEmpty(payload.parent.backgroundImage)) {
+                return true;
+            }
+            return this.hasAncestorBackgroundImage(payload.parent);
         } else {
             return false;
         }
@@ -142,7 +156,7 @@ export class ContainerWrapper extends React.PureComponent {
             computedStyles.push({marginHorizontal: 0});
         } else if (this.payload.bleed && this.payload.style) {
             if (this.payload.style === Enums.ContainerStyle.Default) {
-                this.hasParentStyle(this.payload) &&
+                this.hasAncestorStyle(this.payload) &&
                     this.applyBleedMarginHorizontal(computedStyles);
             } else {
                 this.payload.parent &&
@@ -178,11 +192,8 @@ export class ContainerWrapper extends React.PureComponent {
             });
         if (this.payload.style) {
             if (this.payload.style === Enums.ContainerStyle.Default) {
-                (this.hasParentStyle(this.payload) ||
-                    (this.payload.parent &&
-                        !Utils.isNullOrEmpty(
-                            this.payload.parent.backgroundImage,
-                        ))) &&
+                (this.hasAncestorStyle(this.payload) ||
+                    this.hasAncestorBackgroundImage(this.payload)) &&
                     computedStyles.push({
                         padding: padding,
                     });
