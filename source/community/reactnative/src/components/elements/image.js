@@ -218,17 +218,20 @@ export class Img extends React.Component {
 			return width;
 		else return width * widthToHeightRatio;
 	}
-
+	
     getWidth(layoutWidth, imageWidth) {
         if (
             this.isPersonStyle() ||
-            (this.props.columnWidth && this.props.columnWidth !== Constants.Auto)
+            (this.props.columnWidth &&
+                this.props.columnWidth !== Constants.Auto)
         ) {
             return layoutWidth;
-		} else {
-            if (layoutWidth && layoutWidth < imageWidth) {
-                return layoutWidth;
-            }
+        } else if (
+            layoutWidth < imageWidth &&
+            this.props.columnWidth !== Constants.Auto
+        ) {
+            return layoutWidth;
+        } else {
             return imageWidth;
         }
     }
