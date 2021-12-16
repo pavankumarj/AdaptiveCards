@@ -279,7 +279,6 @@ export class Img extends React.Component {
 				<Image style={imageComputedStyle}
 					accessible={true}
 					accessibilityLabel={this.payload.altText}
-					resizeMode={Constants.AlignStretch}
 					source={{ uri: imageUrl }} />
 			</ElementWrapper>
 		);
@@ -373,6 +372,5 @@ const styles = StyleSheet.create({
 	},
 	imageAuto: {
 		alignSelf: Constants.CenterString,
-		resizeMode: Constants.AlignStretch,
 	},
 });
