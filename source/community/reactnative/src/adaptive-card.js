@@ -4,7 +4,6 @@
 
 import React from 'react';
 import {
-	StyleSheet,
 	Text,
 	ScrollView,
 	KeyboardAvoidingView,
@@ -73,6 +72,8 @@ export default class AdaptiveCard extends React.Component {
 			payload: this.payload,
 			cardModel: this.cardModel
 		}
+        
+        this.scrollView = React.createRef();
 
 	}
 
@@ -93,6 +94,8 @@ export default class AdaptiveCard extends React.Component {
 				payload: this.payload,
 				cardModel: this.cardModel
 			});
+            
+            this.scrollView.current.scrollTo({x: 0, y: 0, animated: false});
 		}
 	}
 
@@ -209,7 +212,7 @@ export default class AdaptiveCard extends React.Component {
 	getAdaptiveCardContent() {
 		// padding
 		const padding = this.hostConfig.getEffectiveSpacing(Enums.Spacing.Padding);
-		let containerStyles = [{ paddingTop: padding, paddingBottom: padding }]
+		let containerStyles = [{ paddingVertical: padding }]
 
 		//If containerStyle is passed by the user from adaptive card via props, we will override this style
 		this.props.containerStyle && containerStyles.push(this.props.containerStyle)
@@ -222,29 +225,29 @@ export default class AdaptiveCard extends React.Component {
 		//If contentHeight is passed by the user from adaptive card via props, we will set this as height
 		this.props.contentHeight && containerStyles.push({ height: this.props.contentHeight })
 
-        var adaptiveCardContent = (
-            <ContainerWrapper
-                configManager={this.configManager}
-                style={containerStyles}
-                json={this.state.cardModel}>
-                <ScrollView
-                    contentContainerStyle={this.props.contentContainerStyle}
-                    showsHorizontalScrollIndicator={true}
-                    showsVerticalScrollIndicator={true}
-                    alwaysBounceVertical={false}
-                    alwaysBounceHorizontal={false}
-                    scrollEnabled={this.props.cardScrollEnabled}>
-                    {this.parsePayload()}
-                    {!Utils.isNullOrEmpty(this.state.cardModel.actions) && (
-                        <ActionWrapper
-                            configManager={this.configManager}
-                            style={{marginHorizontal: padding}}
-                            actions={this.state.cardModel.actions}
-                        />
-                    )}
-                </ScrollView>
-            </ContainerWrapper>
-        );
+    var adaptiveCardContent = (
+        <ContainerWrapper
+            configManager={this.configManager}
+            style={containerStyles}
+            json={this.state.cardModel}>
+            <ScrollView
+                contentContainerStyle={this.props.contentContainerStyle}
+                showsHorizontalScrollIndicator={true}
+                showsVerticalScrollIndicator={true}
+                alwaysBounceVertical={false}
+                alwaysBounceHorizontal={false}
+                scrollEnabled={this.props.cardScrollEnabled}>
+                {this.parsePayload()}
+                {!Utils.isNullOrEmpty(this.state.cardModel.actions) && (
+                    <ActionWrapper
+                        configManager={this.configManager}
+                        style={{marginHorizontal: padding}}
+                        actions={this.state.cardModel.actions}
+                    />
+                )}
+            </ScrollView>
+        </ContainerWrapper>
+    );
 
 		if (!this.props.isActionShowCard) {
 			adaptiveCardContent = (
@@ -362,13 +365,3 @@ AdaptiveCard.propTypes = {
 AdaptiveCard.defaultProps = {
 	cardScrollEnabled: true
 };
-
-const styles = StyleSheet.create({
-	actionContainer: {
-		marginVertical: 10
-	},
-	backgroundImage: {
-		width: "100%"
-	}
-});
-
