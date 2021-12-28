@@ -90,6 +90,7 @@ export class Input extends React.Component {
 									accessibilityLabel={this.payload.altText}
 									placeholder={placeholder}
 									placeholderTextColor={this.styleConfig?.input?.placeholderTextColor}
+									selectionColor={this.styleConfig?.input?.placeholderCursorColor}
 									multiline={isMultiline}
 									maxLength={maxLength}
 									underlineColorAndroid={Constants.TransparentString}
@@ -226,6 +227,7 @@ export class Input extends React.Component {
 								accessibilityLabel={payload.altText}
 								placeholder={placeholder}
 								placeholderTextColor={this.styleConfig?.input?.placeholderTextColor}
+								selectionColor={this.styleConfig?.input?.placeholderCursorColor}
 								multiline={isMultiline}
 								maxLength={maxLength}
 								returnKeyLabel={'submit'}
@@ -236,7 +238,7 @@ export class Input extends React.Component {
 								textContentType={textStyle}
 								keyboardType={keyboardType}
 								onFocus={this.handleFocus}
-								onBlur={this.props.handleBlur}
+								onBlur={this.handleBlur}
 								onChangeText={(text) => {
 									this.props.textValueChanged(text, addInputItem);
 									this.textValueChanged(text);

@@ -136,6 +136,9 @@ export const defaultThemeConfig = {
             borderRadius: 5,
         },
         android: {
+			flexDirection: Constants.FlexRow,
+            justifyContent: Constants.SpaceBetween,
+            alignItems: Constants.FlexEnd,
             borderWidth: 1,
             backgroundColor: Constants.WhiteColor,
             borderColor: Constants.LightGreyColor,
