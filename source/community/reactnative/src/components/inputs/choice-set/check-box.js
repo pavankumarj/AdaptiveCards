@@ -13,7 +13,7 @@ import {
 import { Label } from '../../elements'
 import PropTypes from 'prop-types';
 import * as Constants from '../../../utils/constants';
-import { CommonImage } from '../../elements/common-image';
+import { BaseImage } from '../../elements/base-image';
 
 const IMAGE_COLOR_PROPERTY = "tintColor";
 const TEXT_COLOR_PROPERTY = "color";
@@ -88,7 +88,7 @@ class CheckBox extends React.PureComponent {
 		const { isRadioButtonType } = this.props;
 		const modifiedStyles = this.getModifiedStyles(isRadioButtonType ? this.styleConfig.radioButton : this.styleConfig.checkBox, IMAGE_COLOR_PROPERTY);
 		return (
-            <CommonImage
+            <BaseImage
                 style={modifiedStyles}
                 source={
                     isRadioButtonType

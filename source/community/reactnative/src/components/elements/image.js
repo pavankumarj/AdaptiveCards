@@ -7,6 +7,7 @@
 import React from 'react';
 import {
 	StyleSheet,
+	Image
 } from 'react-native';
 
 import * as Utils from '../../utils/util';
@@ -18,7 +19,7 @@ import {
 	InputContext,
 	InputContextConsumer
 } from '../../utils/context';
-import { CommonImage } from './common-image';
+import { BaseImage } from './base-image';
 
 export class Img extends React.Component {
 
@@ -279,7 +280,7 @@ export class Img extends React.Component {
                 isFirst={this.props.isFirst}
                 style={wrapperComputedStyle}
                 onPageLayout={this.onPageLayoutHandler}>
-                <CommonImage
+                <BaseImage
                     style={imageComputedStyle}
                     accessible={true}
                     accessibilityLabel={this.payload.altText}

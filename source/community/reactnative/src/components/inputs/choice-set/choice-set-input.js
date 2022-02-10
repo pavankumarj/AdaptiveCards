@@ -19,7 +19,7 @@ import { InputContextConsumer } from '../../../utils/context';
 import * as Utils from '../../../utils/util';
 import * as Constants from '../../../utils/constants';
 import InputLabel from "../input-label";
-import { CommonImage } from '../../elements/common-image';
+import { BaseImage } from '../../elements/base-image';
 
 const DropDownImage = './assets/dropdown.png';
 const CompactStyle = "compact";
@@ -198,7 +198,7 @@ export class ChoiceSetInput extends React.Component {
                                     addInputItem,
                                 )}
                             </Text>
-                            <CommonImage
+                            <BaseImage
                                 style={styles.button}
                                 source={require(DropDownImage)}
                             />

@@ -8,6 +8,7 @@ import React from "react";
 import {
     View,
     StyleSheet,
+    Image
 } from "react-native";
 
 import * as Constants from "../../utils/constants";
@@ -15,7 +16,7 @@ import * as Enums from '../../utils/enums';
 import * as Utils from '../../utils/util';
 import PropTypes from 'prop-types';
 import { InputContextConsumer } from '../../utils/context';
-import { CommonImage } from "./common-image";
+import { BaseImage } from "./base-image";
 
 export class BackgroundImage extends React.Component {
 
@@ -111,7 +112,7 @@ export class BackgroundImage extends React.Component {
             case Enums.BackgroundImageMode.Repeat:
                 imageContainerStyle.push({ alignItems: Constants.FlexStart, justifyContent: Constants.FlexStart });
                 backgroundImage.push(
-                    <CommonImage
+                    <BaseImage
                         key="image-repeat"
                         resizeMethod={Constants.Resize}
                         accessible={this.backgroundImage.altText ? true : false}
@@ -125,7 +126,7 @@ export class BackgroundImage extends React.Component {
             case Enums.BackgroundImageMode.RepeatHorizontally:
                 imageContainerStyle.push(this.getImageVerticalAlignment());
                 backgroundImage.push(
-                    <CommonImage
+                    <BaseImage
                         key="image-repeat-horizontal"
                         resizeMethod={Constants.Resize}
                         accessible={this.backgroundImage.altText ? true : false}
@@ -143,7 +144,7 @@ export class BackgroundImage extends React.Component {
             case Enums.BackgroundImageMode.RepeatVertically:
                 imageContainerStyle.push(this.getImageHorizontalAlignment());
                 backgroundImage.push(
-                    <CommonImage
+                    <BaseImage
                         key="image-repeat-vertical"
                         resizeMethod={Constants.Resize}
                         accessible={this.backgroundImage.altText ? true : false}
@@ -158,7 +159,7 @@ export class BackgroundImage extends React.Component {
             case Enums.BackgroundImageMode.Cover:
             default:
                 backgroundImage.push(
-                    <CommonImage
+                    <BaseImage
                         key="image-stretch"
                         source={{ uri: this.backgroundImage.url }}
                         accessible={this.backgroundImage.altText ? true : false}

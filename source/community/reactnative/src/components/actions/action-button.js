@@ -21,7 +21,7 @@ import {
 } from '../../utils/context';
 import * as Constants from '../../utils/constants';
 import * as Enums from '../../utils/enums';
-import { CommonImage } from '../elements/common-image';
+import { BaseImage } from '../elements/base-image';
 
 
 export class ActionButton extends React.Component {
@@ -219,7 +219,7 @@ export class ActionButton extends React.Component {
 		return (
             <View style={this.getButtonStyles()}>
                 {!Utils.isNullOrEmpty(this.iconUrl) ? (
-                    <CommonImage
+                    <BaseImage
                         resizeMode="center"
                         source={{uri: this.iconUrl}}
                         style={[styles.buttonIcon, this.styleConfig.actionIcon]}

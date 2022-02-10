@@ -19,7 +19,7 @@ import {
     InputContext
 } from '../../utils/context';
 import * as Utils from '../../utils/util';
-import { CommonImage } from "./common-image";
+import { BaseImage } from "./base-image";
 
 
 export class Media extends React.Component {
@@ -130,7 +130,7 @@ export class Media extends React.Component {
                                     style={styles.nativeVideoControls}
                                 />
                             }
-                            {(!this.state.onLoad && this.payload.poster) && <CommonImage source={{ uri: this.payload.poster }} resizeMode="contain" style={styles.nativeVideoControls} />}
+                            {(!this.state.onLoad && this.payload.poster) && <BaseImage source={{ uri: this.payload.poster }} resizeMode="contain" style={styles.nativeVideoControls} />}
                         </View>
                     </ElementWrapper>
                 }}
