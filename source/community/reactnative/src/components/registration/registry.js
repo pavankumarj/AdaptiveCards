@@ -93,7 +93,7 @@ export class Registry {
 	};
 
 	InternalRegistry = {
-		'CommonImage': undefined
+		'BaseImage': undefined
 	}
 
 	/**
