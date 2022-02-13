@@ -55,10 +55,6 @@ In order to override the rendering of built-in components OR to add/remove  an e
 ```
 Registry.getManager().registerComponent('TextBlock',CustomTextBlock);
 ```
-* To override an internal component ex: `BaseImage`,
-```
-Registry.getManager().registerInternalComponent('BaseImage',CustomBaseImage);
-```
 * To add support for new element type say `Rating`, add the component in the registry as below :
 
 ```
